@@ -3,19 +3,17 @@ Author: Vasyl Onufriyev
 Date: 8.28.2019
 Class: CS4280
 Instructor: Professor Janikow
-Description: Initial point of the program--contains the main function and commandline argument validation/parsing
+Description: Initial point of the program--contains the main function and commandline argument validation/parsing/semantics
 */
 
 package com.umsl.vasylonufriyev;
 
 import com.umsl.vasylonufriyev.DataStructures.ProgramNode;
-import com.umsl.vasylonufriyev.ProgramParser.ProgramTreePrint;
 import com.umsl.vasylonufriyev.DatasourceParser.ParseCMD;
 import com.umsl.vasylonufriyev.DatasourceParser.ParseFile;
 import com.umsl.vasylonufriyev.ProgramParser.Parser;
 import com.umsl.vasylonufriyev.StaticSemantics.StaticCheck;
 import com.umsl.vasylonufriyev.TokenScanner.ProgramDataBuffer;
-import jdk.dynalink.beans.StaticClass;
 
 public class Main {
 
@@ -34,7 +32,7 @@ public class Main {
         ProgramNode parseResult = null;
         try {
             parseResult = parser.beginParse();
-            System.out.println("Parser: SUCCESSFULLY PARSED");
+            System.out.println("Parser: PASS");
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.exit(-1);
@@ -44,8 +42,9 @@ public class Main {
 
         try {
             staticSemanticChecker.beginCheck();
-            System.out.println("Static Check: PASSED");
+            System.out.println("Static Semantics Check: PASS");
         } catch (Exception e) {
+            //e.printStackTrace();
             System.out.println(e.getMessage());
         }
     }

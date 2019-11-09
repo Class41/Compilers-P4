@@ -1,3 +1,11 @@
+/*
+Author: Vasyl Onufriyev
+Date: 11.8.2019
+Class: CS4280
+Instructor: Professor Janikow
+Description: Handles static semantic scoping of variables
+*/
+
 package com.umsl.vasylonufriyev.StaticSemantics;
 
 import com.umsl.vasylonufriyev.DataStructures.ProgramNode;
