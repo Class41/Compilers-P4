@@ -13,7 +13,9 @@ import com.umsl.vasylonufriyev.ProgramParser.ProgramTreePrint;
 import com.umsl.vasylonufriyev.DatasourceParser.ParseCMD;
 import com.umsl.vasylonufriyev.DatasourceParser.ParseFile;
 import com.umsl.vasylonufriyev.ProgramParser.Parser;
+import com.umsl.vasylonufriyev.StaticSemantics.StaticCheck;
 import com.umsl.vasylonufriyev.TokenScanner.ProgramDataBuffer;
+import jdk.dynalink.beans.StaticClass;
 
 public class Main {
 
@@ -29,14 +31,22 @@ public class Main {
 
         System.out.println("~~ read " + parsedData.length + " lines. ~~");
         Parser parser = new Parser(new ProgramDataBuffer(parsedData));
+        ProgramNode parseResult = null;
+        try {
+            parseResult = parser.beginParse();
+            System.out.println("Parser: SUCCESSFULLY PARSED");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+
+        StaticCheck staticSemanticChecker = new StaticCheck(parseResult);
 
         try {
-            ProgramNode parseResult = parser.beginParse();
-            System.out.println("SUCCESSFULLY PARSED");
-            ProgramTreePrint.treePrintPreorder(parseResult, 0);
+            staticSemanticChecker.beginCheck();
+            System.out.println("Static Check: PASSED");
         } catch (Exception e) {
-            e.printStackTrace();
-            System.exit(-1);
+            System.out.println(e.getMessage());
         }
     }
 

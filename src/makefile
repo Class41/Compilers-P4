@@ -6,15 +6,16 @@ datasourceparserpath = DatasourceParser/
 datastructurespath = DataStructures/
 tokenscannerpath = TokenScanner/
 programparserpath = ProgramParser/
+staticsemanticspath = StaticSemantics/
 
-buildpath = $(basepath)$(main)$(compext) $(basepath)$(datasourceparserpath)$(compext) $(basepath)$(datastructurespath)$(compext) $(basepath)$(tokenscannerpath)$(compext) $(basepath)$(programparserpath)$(compext)
+buildpath = $(basepath)$(main)$(compext) $(basepath)$(datasourceparserpath)$(compext) $(basepath)$(datastructurespath)$(compext) $(basepath)$(tokenscannerpath)$(compext) $(basepath)$(programparserpath)$(compext) $(basepath)$(staticsemanticspath)$(compext)
 
 jarname = statSem.jar
 manifestpath = ./MANIFEST.MF
 jarbuilder = jar cfm $(jarname) $(manifestpath)
 buildext = *.class
 
-jarbuildpath = $(basepath)$(main)$(buildext) $(basepath)$(datasourceparserpath)$(buildext) $(basepath)$(datastructurespath)$(buildext) $(basepath)$(tokenscannerpath)$(buildext) $(basepath)$(programparserpath)$(buildext)
+jarbuildpath = $(basepath)$(main)$(buildext) $(basepath)$(datasourceparserpath)$(buildext) $(basepath)$(datastructurespath)$(buildext) $(basepath)$(tokenscannerpath)$(buildext) $(basepath)$(programparserpath)$(buildext) $(basepath)$(staticsemanticspath)$(buildext)
 
 all:
 	$(compiler) $(buildpath) && \
