@@ -62,9 +62,9 @@ public class StaticCheck {
                                                 " is already defined in this scope");
                             }
                         }
-                        stack.push(tk);
                         blockStack.peek().setVarCount(blockStack.peek().getVarCount() + 1);
                     }
+                    stack.push(tk);
                 }
             } else {
                 if (tk != null && tk.getTokenType().equals("IDENTIFIER_TK")) {
