@@ -28,17 +28,17 @@ public class StaticCheck {
     }
 
     private void treePreorderStaticCheck(ProgramNode node) throws Exception {
-        if (node.getNodeLabel().equals("<Block>"))
+        if (node.getNodeLabel().equals("<Block>")) //If we are on a block node, push a block scope onto the stack
             blockStack.push(new BlockContainer());
 
-        checkMe(node);
-        for (int i = 0; i < node.children.length; i++) {
+        checkMe(node); //Check current node
+        for (int i = 0; i < node.children.length; i++) { //Check children L -> R
             if (node.children[i] != null) {
                 treePreorderStaticCheck(node.children[i]);
             }
         }
 
-        if (node.getNodeLabel().equals("<Block>")) {
+        if (node.getNodeLabel().equals("<Block>")) { //Delete this block, we've visited all children and are about to go up
             for (int i = 0; i < blockStack.peek().getVarCount(); i++) {
                 stack.pop();
             }
@@ -47,13 +47,13 @@ public class StaticCheck {
     }
 
     private void checkMe(ProgramNode node) throws Exception {
-        for (Token tk : node.tokenData) {
-            if (node.getNodeLabel().equals("<Vars>")) {
-                if (tk != null && tk.getTokenType().equals("IDENTIFIER_TK")) {
-                    if (blockStack.size() > 0 && blockStack.peek() != null) {
-                        if (blockStack.peek().getVarCount() > 0) {
-                            int stackpos = stack.find(tk);
-                            if (stackpos > -1 && stackpos < blockStack.peek().getVarCount()) {
+        for (Token tk : node.tokenData) { //For each token
+            if (node.getNodeLabel().equals("<Vars>")) { //If it is a vars block
+                if (tk != null && tk.getTokenType().equals("IDENTIFIER_TK")) { //Get the identifier token
+                    if (blockStack.size() > 0 && blockStack.peek() != null) { //check is block scope is null or not
+                        if (blockStack.peek().getVarCount() > 0) { //check if vars exist in this scope already
+                            int stackpos = stack.find(tk); //get position of current tk in stack
+                            if (stackpos > -1 && stackpos < blockStack.peek().getVarCount()) { //check if it is in current bound
                                 throw new Exception(
                                         "STATICSEM:L"
                                                 + tk.getTokenLine()
@@ -62,13 +62,13 @@ public class StaticCheck {
                                                 " is already defined in this scope");
                             }
                         }
-                        blockStack.peek().setVarCount(blockStack.peek().getVarCount() + 1);
+                        blockStack.peek().setVarCount(blockStack.peek().getVarCount() + 1); //increment +1 if block exist
                     }
-                    stack.push(tk);
+                    stack.push(tk); //push onto stack anyways, block or no block. this supports Global variables
                 }
             } else {
-                if (tk != null && tk.getTokenType().equals("IDENTIFIER_TK")) {
-                    if (stack.find(tk) == -1)
+                if (tk != null && tk.getTokenType().equals("IDENTIFIER_TK")) { //We are using a IDtk in a statement
+                    if (stack.find(tk) == -1) //if it doesn't exist, it wasn't defined anywhere in the scope
                         throw new Exception(
                                 "STATICSEM:L"
                                         + tk.getTokenLine()
