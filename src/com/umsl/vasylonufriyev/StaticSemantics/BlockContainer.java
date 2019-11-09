@@ -10,25 +10,19 @@ package com.umsl.vasylonufriyev.StaticSemantics;
 
 import com.umsl.vasylonufriyev.DataStructures.ProgramNode;
 
-public class BlockContainer {
+class BlockContainer {
 
-    private ProgramNode blockTk;
     private int varCount;
 
-    public BlockContainer(ProgramNode blockTk) {
-        this.blockTk = blockTk;
+    BlockContainer() {
         this.varCount = 0;
     }
 
-    public ProgramNode getBlockTk() {
-        return blockTk;
-    }
-
-    public int getVarCount() {
+    int getVarCount() {
         return varCount;
     }
 
-    public void setVarCount(int varCount) {
+    void setVarCount(int varCount) {
         this.varCount = varCount;
     }
 }

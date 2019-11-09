@@ -24,17 +24,17 @@ public class StaticCheck {
     }
 
     public void beginCheck() throws Exception {
-        treePreorderStaticCheck(parseResult, 0);
+        treePreorderStaticCheck(parseResult);
     }
 
-    private void treePreorderStaticCheck(ProgramNode node, int depth) throws Exception {
+    private void treePreorderStaticCheck(ProgramNode node) throws Exception {
         if (node.getNodeLabel().equals("<Block>"))
-            blockStack.push(new BlockContainer(node));
+            blockStack.push(new BlockContainer());
 
-        checkMe(node, depth);
+        checkMe(node);
         for (int i = 0; i < node.children.length; i++) {
             if (node.children[i] != null) {
-                treePreorderStaticCheck(node.children[i], depth + 1);
+                treePreorderStaticCheck(node.children[i]);
             }
         }
 
@@ -46,11 +46,11 @@ public class StaticCheck {
         }
     }
 
-    private void checkMe(ProgramNode node, int depth) throws Exception {
+    private void checkMe(ProgramNode node) throws Exception {
         for (Token tk : node.tokenData) {
             if (node.getNodeLabel().equals("<Vars>")) {
                 if (tk != null && tk.getTokenType().equals("IDENTIFIER_TK")) {
-                    if (blockStack.peek() != null) {
+                    if (blockStack.size() > 0 && blockStack.peek() != null) {
                         if (blockStack.peek().getVarCount() > 0) {
                             int stackpos = stack.find(tk);
                             if (stackpos > -1 && stackpos < blockStack.peek().getVarCount()) {
