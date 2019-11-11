@@ -63,7 +63,18 @@ public class StaticCheck {
                             }
                         }
                         blockStack.peek().setVarCount(blockStack.peek().getVarCount() + 1); //increment +1 if block exist
+                    } else {
+                        int stackpos = stack.find(tk);
+                        if (stackpos > -1) { //check if it is in current bound
+                            throw new Exception(
+                                    "STATICSEM:L"
+                                            + tk.getTokenLine()
+                                            + ": "
+                                            + tk.getTokenValue() +
+                                            " is already defined in global scope!");
+                        }
                     }
+
                     stack.push(tk); //push onto stack anyways, block or no block. this supports Global variables
                 }
             } else {
