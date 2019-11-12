@@ -26,13 +26,12 @@ class StaticStack {
     }
 
     int find(Token tk) {
-        int stackPos = 0;
-        for ( Token stackItem : varStack ) {
-            if(stackItem.getTokenValue().equals(tk.getTokenValue()))
+        int stackPos = varStack.size() - 1;
+        for (; stackPos >= 0; stackPos-- ) {
+            if(varStack.get(stackPos).getTokenValue().equals(tk.getTokenValue()))
             {
-                return stackPos;
+                return varStack.size() - 1 - stackPos;
             }
-            stackPos++;
         }
         return -1;
     }
