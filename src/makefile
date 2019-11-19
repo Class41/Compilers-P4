@@ -10,7 +10,7 @@ staticsemanticspath = StaticSemantics/
 
 buildpath = $(basepath)$(main)$(compext) $(basepath)$(datasourceparserpath)$(compext) $(basepath)$(datastructurespath)$(compext) $(basepath)$(tokenscannerpath)$(compext) $(basepath)$(programparserpath)$(compext) $(basepath)$(staticsemanticspath)$(compext)
 
-jarname = statSem.jar
+jarname = compile.jar
 manifestpath = ./MANIFEST.MF
 jarbuilder = jar cfm $(jarname) $(manifestpath)
 buildext = *.class
