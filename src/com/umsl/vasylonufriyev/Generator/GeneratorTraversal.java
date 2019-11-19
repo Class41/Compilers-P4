@@ -36,6 +36,7 @@ public class GeneratorTraversal {
         if (node.getNodeLabel().equals("<Block>")) //If we are on a block node, push a block scope onto the stack
             blockStack.push(new GeneratorBlockContainer());
 
+        generator.generateCodeForNode(node);
         if (node.getNodeLabel().equals("<Block>") || node.getNodeLabel().equals("<Vars>")) {
             checkMe(node); //Check current node
             for (int i = 0; i < node.children.length; i++) { //Check children L -> R
@@ -45,7 +46,6 @@ public class GeneratorTraversal {
             }
         }
 
-        generator.generateCodeForNode(node);
 
         if (node.getNodeLabel().equals("<Block>")) { //Delete this block, we've visited all children and are about to go up
             for (int i = 0; i < blockStack.peek().getVarCount(); i++) {
