@@ -48,6 +48,8 @@ public class Main {
             System.out.println(e.getMessage());
             System.exit(-1);
         }
+
+
     }
 
     private static String[] classifyAndParseTokens(String[] cmdArgs) {
