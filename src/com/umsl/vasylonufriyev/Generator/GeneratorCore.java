@@ -1,12 +1,14 @@
 package com.umsl.vasylonufriyev.Generator;
 
 import com.umsl.vasylonufriyev.DataStructures.ProgramNode;
+import com.umsl.vasylonufriyev.StaticSemantics.StaticStack;
 
 public class GeneratorCore {
     private GeneratorActions genActions;
+    private boolean usingFile;
 
     public GeneratorCore(boolean usingFile) {
-        genActions = new GeneratorActions(usingFile);
+        this.usingFile = usingFile;
     }
 
     public void generateCodeForNode(ProgramNode node) {
@@ -82,5 +84,16 @@ public class GeneratorCore {
 
     public void generatePop() {
         genActions.outputPop();
+    }
+    public void generatePush() { genActions.outputPush(); }
+    public void generatePush(int pos) { genActions.outputPush(pos); }
+
+
+    public void generateFile() {
+        genActions.generateFile();
+    }
+
+    public void setStaticStackReference(StaticStack stack) {
+        genActions = new GeneratorActions(usingFile, stack);
     }
 }

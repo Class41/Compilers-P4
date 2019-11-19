@@ -25,10 +25,12 @@ public class StaticCheck {
         this.parseResult = parseResult;
         this.stack = new StaticStack();
         this.generator = generator;
+        generator.setStaticStackReference(stack);
     }
 
     public void beginCheck() throws Exception {
         treePreorderStaticCheck(parseResult);
+        generator.generateFile();
     }
 
     private void treePreorderStaticCheck(ProgramNode node) throws Exception {
@@ -45,12 +47,14 @@ public class StaticCheck {
         if (node.getNodeLabel().equals("<Block>")) { //Delete this block, we've visited all children and are about to go up
             for (int i = 0; i < blockStack.peek().getVarCount(); i++) {
                 stack.pop();
+                generator.generatePop();
             }
             blockStack.pop();
         }
     }
 
     private void checkMe(ProgramNode node) throws Exception {
+        generator.generateCodeForNode(node);
         for (Token tk : node.tokenData) { //For each token
             if (node.getNodeLabel().equals("<Vars>")) { //If it is a vars block
                 if (tk != null && tk.getTokenType().equals("IDENTIFIER_TK")) { //Get the identifier token
@@ -80,6 +84,7 @@ public class StaticCheck {
                     }
 
                     stack.push(tk); //push onto stack anyways, block or no block. this supports Global variables
+                    generator.generatePush();
                 }
             } else {
                 if (tk != null && tk.getTokenType().equals("IDENTIFIER_TK")) { //We are using a IDtk in a statement

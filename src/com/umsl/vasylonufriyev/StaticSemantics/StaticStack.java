@@ -12,7 +12,7 @@ import com.umsl.vasylonufriyev.DataStructures.Token;
 
 import java.util.Stack;
 
-class StaticStack {
+public class StaticStack {
     private Stack<Token> varStack = new Stack<Token>();
 
     void push(Token tk) throws Exception {
@@ -25,7 +25,7 @@ class StaticStack {
         varStack.pop();
     }
 
-    int find(Token tk) {
+    public int find(Token tk) {
         int stackPos = varStack.size() - 1;
         for (; stackPos >= 0; stackPos-- ) {
             if(varStack.get(stackPos).getTokenValue().equals(tk.getTokenValue()))

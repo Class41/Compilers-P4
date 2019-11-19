@@ -13,17 +13,15 @@ class GeneratorOutput {
         targetOutput = "";
     }
 
-    public void appendCommand(String command) {
-        targetOutput += command;
+    void appendCommand(String command) {
+        targetOutput += command + "\n";
     }
 
 
-    public void finalizeAndWrite() {
-        File targetFile = new File("./" + targetFilename);
+    void finalizeAndWrite() {
+        File targetFile = new File(targetFilename);
 
         try {
-            if(!targetFile.canWrite())
-                throw new IOException();
             BufferedWriter targetOutputStream = new BufferedWriter(new FileWriter(targetFile));
             targetOutputStream.write(targetOutput);
             targetOutputStream.flush();
