@@ -6,8 +6,15 @@ LOAD 3
 PUSH
 LOAD 4
 PUSH
+READ Temporary
+LOAD Temporary
+STACKW 1
 LOAD 5
 PUSH
+READ Temporary
+LOAD Temporary
+STACKW 0
 POP
 POP
 POP
+Temporary 0

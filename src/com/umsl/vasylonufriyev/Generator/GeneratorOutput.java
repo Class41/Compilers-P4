@@ -23,7 +23,7 @@ class GeneratorOutput {
 
         try {
             BufferedWriter targetOutputStream = new BufferedWriter(new FileWriter(targetFile));
-            targetOutputStream.write(targetOutput);
+            targetOutputStream.write(targetOutput + "Temporary 0\n");
             targetOutputStream.flush();
             targetOutputStream.close();
         } catch (IOException e) {

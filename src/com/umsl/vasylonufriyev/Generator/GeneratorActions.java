@@ -44,6 +44,14 @@ class GeneratorActions {
     }
 
     void outputIn(ProgramNode node) {
+        genOut.appendCommand("READ Temporary");
+        genOut.appendCommand("LOAD Temporary");
+        for ( Token tk : node.tokenData ) {
+            if (tk != null && tk.getTokenType().equals("IDENTIFIER_TK"))
+            {
+                genOut.appendCommand("STACKW " + varStack.find(tk));
+            }
+        }
     }
 
     void outputStat(ProgramNode node) {
