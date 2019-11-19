@@ -11,6 +11,7 @@ package com.umsl.vasylonufriyev;
 import com.umsl.vasylonufriyev.DataStructures.ProgramNode;
 import com.umsl.vasylonufriyev.DatasourceParser.ParseCMD;
 import com.umsl.vasylonufriyev.DatasourceParser.ParseFile;
+import com.umsl.vasylonufriyev.Generator.GeneratorCore;
 import com.umsl.vasylonufriyev.ProgramParser.Parser;
 import com.umsl.vasylonufriyev.StaticSemantics.StaticCheck;
 import com.umsl.vasylonufriyev.TokenScanner.ProgramDataBuffer;
@@ -39,7 +40,8 @@ public class Main {
             System.exit(-1);
         }
 
-        StaticCheck staticSemanticChecker = new StaticCheck(parseResult);
+        GeneratorCore generator = new GeneratorCore(usingFile);
+        StaticCheck staticSemanticChecker = new StaticCheck(parseResult, generator);
 
         try {
             staticSemanticChecker.beginCheck();
@@ -48,8 +50,6 @@ public class Main {
             System.out.println(e.getMessage());
             System.exit(-1);
         }
-
-
     }
 
     private static String[] classifyAndParseTokens(String[] cmdArgs) {

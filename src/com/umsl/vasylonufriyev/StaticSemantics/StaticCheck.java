@@ -10,17 +10,21 @@ package com.umsl.vasylonufriyev.StaticSemantics;
 
 import com.umsl.vasylonufriyev.DataStructures.ProgramNode;
 import com.umsl.vasylonufriyev.DataStructures.Token;
+import com.umsl.vasylonufriyev.Generator.GeneratorCore;
 
 import java.util.Stack;
 
 public class StaticCheck {
+
+    private final GeneratorCore generator;
     private ProgramNode parseResult;
     private StaticStack stack;
     private Stack<BlockContainer> blockStack = new Stack<BlockContainer>();
 
-    public StaticCheck(ProgramNode parseResult) {
+    public StaticCheck(ProgramNode parseResult, GeneratorCore generator) {
         this.parseResult = parseResult;
         this.stack = new StaticStack();
+        this.generator = generator;
     }
 
     public void beginCheck() throws Exception {
