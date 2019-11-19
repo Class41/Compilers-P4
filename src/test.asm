@@ -1,12 +1,31 @@
+PUSH
 LOAD 1
+STACKW 0
 PUSH
 LOAD 2
+STACKW 0
 PUSH
+LOAD 3
+STACKW 0
+READ Temporary
+LOAD Temporary
+STACKW 0
+PUSH
+LOAD 4
+STACKW 0
 STACKR 0
-STORE T
-WRITE T
+STORE Temporary
+WRITE Temporary
+POP
+STACKR 0
+STORE Temporary
+WRITE Temporary
 STACKR 1
-STORE T
-WRITE T
+STORE Temporary
+WRITE Temporary
+STACKR 2
+STORE Temporary
+WRITE Temporary
+POP
 STOP
-T 0
+Temporary 0

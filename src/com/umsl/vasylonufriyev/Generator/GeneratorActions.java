@@ -68,8 +68,7 @@ class GeneratorActions {
             if (tk != null && tk.getTokenType().equals("IDENTIFIER_TK")) {
                 genOut.appendCommand("STACKR " + varStack.find(tk));
                 genOut.appendCommand("STORE Temporary");
-            }
-            else if (tk != null && tk.getTokenType().equals("NUMBER_TK")) {
+            } else if (tk != null && tk.getTokenType().equals("NUMBER_TK")) {
                 genOut.appendCommand("LOAD " + tk.getTokenValue());
                 genOut.appendCommand("STORE Temporary");
             }
@@ -97,7 +96,9 @@ class GeneratorActions {
     void outputVars(ProgramNode node) {
         for (Token tk : node.tokenData) { //For each token
             if (tk != null && tk.getTokenType().equals("NUMBER_TK")) { //Get the identifier token
+                outputPush();
                 genOut.appendCommand("LOAD " + tk.getTokenValue());
+                genOut.appendCommand("STACKW 0");
             }
         }
     }
@@ -110,9 +111,5 @@ class GeneratorActions {
 
     void outputPush() {
         genOut.appendCommand("PUSH");
-    }
-
-    void outputPush(int pos) {
-        genOut.appendCommand("PUSH " + pos);
     }
 }

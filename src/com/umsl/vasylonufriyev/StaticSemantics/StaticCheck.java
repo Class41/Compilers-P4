@@ -85,7 +85,6 @@ public class StaticCheck {
                     }
 
                     stack.push(tk); //push onto stack anyways, block or no block. this supports Global variables
-                    generator.generatePush();
                 }
             } else {
                 if (tk != null && tk.getTokenType().equals("IDENTIFIER_TK")) { //We are using a IDtk in a statement

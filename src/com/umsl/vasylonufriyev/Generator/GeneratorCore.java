@@ -111,11 +111,6 @@ public class GeneratorCore {
         genActions.outputPush();
     }
 
-    public void generatePush(int pos) {
-        genActions.outputPush(pos);
-    }
-
-
     public void generateFile() {
         genActions.generateFile();
     }
