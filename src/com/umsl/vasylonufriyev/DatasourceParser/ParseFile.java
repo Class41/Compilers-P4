@@ -43,9 +43,13 @@ public class ParseFile {
     }
 
     public String[] getParseResult() {
-        if(parser != null)
+        if (parser != null)
             return parser.getResult();
         else
             return null;
+    }
+
+    public boolean isUsingFile() {
+        return parser.isUsingFile();
     }
 }

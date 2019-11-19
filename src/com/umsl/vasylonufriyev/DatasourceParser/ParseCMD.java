@@ -21,4 +21,8 @@ public class ParseCMD {
     public String[] getParseResult() {
         return parser.getResult();
     }
+
+    public boolean isUsingFile() {
+        return parser.isUsingFile();
+    }
 }

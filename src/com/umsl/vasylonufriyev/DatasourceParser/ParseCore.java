@@ -88,4 +88,7 @@ class ParseCore {
     String[] getResult() {
         return parseResult;
     }
+    boolean isUsingFile() {
+        return inType == ParseSourceType.FILEINPUT;
+    }
 }

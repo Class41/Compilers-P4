@@ -16,6 +16,7 @@ import com.umsl.vasylonufriyev.StaticSemantics.StaticCheck;
 import com.umsl.vasylonufriyev.TokenScanner.ProgramDataBuffer;
 
 public class Main {
+    private static boolean usingFile;
 
     public static void main(String[] args) {
         String[] parsedData = classifyAndParseTokens(args);
@@ -56,11 +57,12 @@ public class Main {
             case 0: //if there is no filename provided
                 ParseCMD cmdInputParser = new ParseCMD();
                 dataSet = cmdInputParser.getParseResult();
+                usingFile = cmdInputParser.isUsingFile();
                 break;
             case 1: //if a filename is provided
                 ParseFile fileInputParser = new ParseFile(cmdArgs[0]);
                 dataSet = fileInputParser.getParseResult();
-
+                usingFile = fileInputParser.isUsingFile();
                 break;
             default: //if more than 1 parameter is provided (filename)
                 System.out.println("Input exceeded expected argument count. Expected 0 or 1 got " + cmdArgs.length);
