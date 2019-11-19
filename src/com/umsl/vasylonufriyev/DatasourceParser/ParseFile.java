@@ -7,6 +7,8 @@ Description: Prepares file arg for processing and checks for file existence and 
 */
 package com.umsl.vasylonufriyev.DatasourceParser;
 
+import com.umsl.vasylonufriyev.Main;
+
 import java.io.File;
 
 public class ParseFile {
@@ -22,6 +24,8 @@ public class ParseFile {
         } else { //if not, append it
             qualifiedFileName += EXTENSION;
         }
+
+        Main.inFileName = qualifiedFileName.substring(0, qualifiedFileName.indexOf(".fs19"));
 
         File inFile = new File("./" + qualifiedFileName);
 

@@ -1,5 +1,7 @@
 package com.umsl.vasylonufriyev.Generator;
 
+import com.umsl.vasylonufriyev.Main;
+
 import java.io.*;
 
 class GeneratorOutput {
@@ -7,7 +9,7 @@ class GeneratorOutput {
     private String targetOutput;
 
     GeneratorOutput(boolean usingFile) {
-        targetFilename = (usingFile) ? "file.asm" : "kb.asm";
+        targetFilename = (usingFile) ? Main.inFileName + ".asm" : "kb.asm";
         targetOutput = "";
     }
 

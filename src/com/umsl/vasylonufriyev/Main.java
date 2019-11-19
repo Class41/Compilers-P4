@@ -18,6 +18,7 @@ import com.umsl.vasylonufriyev.TokenScanner.ProgramDataBuffer;
 
 public class Main {
     private static boolean usingFile;
+    public static String inFileName;
 
     public static void main(String[] args) {
         String[] parsedData = classifyAndParseTokens(args);
