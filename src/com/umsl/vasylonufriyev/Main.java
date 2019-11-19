@@ -12,6 +12,7 @@ import com.umsl.vasylonufriyev.DataStructures.ProgramNode;
 import com.umsl.vasylonufriyev.DatasourceParser.ParseCMD;
 import com.umsl.vasylonufriyev.DatasourceParser.ParseFile;
 import com.umsl.vasylonufriyev.Generator.GeneratorCore;
+import com.umsl.vasylonufriyev.Generator.GeneratorTraversal;
 import com.umsl.vasylonufriyev.ProgramParser.Parser;
 import com.umsl.vasylonufriyev.StaticSemantics.StaticCheck;
 import com.umsl.vasylonufriyev.TokenScanner.ProgramDataBuffer;
@@ -41,12 +42,21 @@ public class Main {
             System.exit(-1);
         }
 
-        GeneratorCore generator = new GeneratorCore(usingFile);
-        StaticCheck staticSemanticChecker = new StaticCheck(parseResult, generator);
+        StaticCheck staticSemanticChecker = new StaticCheck(parseResult);
 
         try {
             staticSemanticChecker.beginCheck();
             System.out.println("Static Semantics Check: PASS");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+
+        GeneratorCore generator = new GeneratorCore(usingFile);
+        GeneratorTraversal generatorTraversal = new GeneratorTraversal(parseResult, generator);
+
+        try {
+            generatorTraversal.beginGenerate();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.exit(-1);

@@ -23,7 +23,7 @@ class GeneratorOutput {
 
         try {
             BufferedWriter targetOutputStream = new BufferedWriter(new FileWriter(targetFile));
-            targetOutputStream.write(targetOutput + "STOP\nTemporary 0\n");
+            targetOutputStream.write(targetOutput + "STOP\n" + TempVariableGenerator.getFormattedTempVars());
             targetOutputStream.flush();
             targetOutputStream.close();
         } catch (IOException e) {

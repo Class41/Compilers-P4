@@ -4,18 +4,25 @@ import com.umsl.vasylonufriyev.DataStructures.ProgramNode;
 import com.umsl.vasylonufriyev.DataStructures.Token;
 import com.umsl.vasylonufriyev.StaticSemantics.StaticStack;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class GeneratorActions {
 
     private final GeneratorOutput genOut;
-    private final StaticStack varStack;
+    private final GeneratorStack varStack;
 
-    GeneratorActions(boolean usingFile, StaticStack stack) {
+    GeneratorActions(boolean usingFile, GeneratorStack stack) {
         this.varStack = stack;
         this.genOut = new GeneratorOutput(usingFile);
     }
 
     void generateFile() {
         genOut.finalizeAndWrite();
+    }
+
+    String generateTempVariable() {
+        return TempVariableGenerator.generateTempVar();
     }
 
     void outputPop() {
@@ -41,12 +48,15 @@ class GeneratorActions {
     }
 
     void outputOut(ProgramNode node) {
-        genOut.appendCommand("WRITE Temporary");
+        String temp1 = generateTempVariable();
+        genOut.appendCommand("STORE " + temp1);
+        genOut.appendCommand("WRITE " + temp1);
     }
 
     void outputIn(ProgramNode node) {
-        genOut.appendCommand("READ Temporary");
-        genOut.appendCommand("LOAD Temporary");
+        String temp1 = generateTempVariable();
+        genOut.appendCommand("READ " + temp1);
+        genOut.appendCommand("LOAD " + temp1);
         for (Token tk : node.tokenData) {
             if (tk != null && tk.getTokenType().equals("IDENTIFIER_TK")) {
                 genOut.appendCommand("STACKW " + varStack.find(tk));
@@ -54,6 +64,7 @@ class GeneratorActions {
         }
     }
 
+    /* NO CODE GENERATION REQUIRED */
     void outputStat(ProgramNode node) {
     }
 
@@ -67,10 +78,8 @@ class GeneratorActions {
         for (Token tk : node.tokenData) {
             if (tk != null && tk.getTokenType().equals("IDENTIFIER_TK")) {
                 genOut.appendCommand("STACKR " + varStack.find(tk));
-                genOut.appendCommand("STORE Temporary");
             } else if (tk != null && tk.getTokenType().equals("NUMBER_TK")) {
                 genOut.appendCommand("LOAD " + tk.getTokenValue());
-                genOut.appendCommand("STORE Temporary");
             }
         }
     }
@@ -85,6 +94,11 @@ class GeneratorActions {
     }
 
     void outputA(ProgramNode node) {
+        /*for (Token tk : node.tokenData) {
+            if (tk != null && tk.getTokenType().equals("MINUS_TK")) {
+                genOut.appendCommand("SUB Temporary");
+            }
+        }*/
     }
 
     void outputExprFactor(ProgramNode node) {
@@ -103,6 +117,7 @@ class GeneratorActions {
         }
     }
 
+    /* NO CODE GENERATION REQUIRED */
     void outputBlock(ProgramNode node) {
     }
 
@@ -111,5 +126,23 @@ class GeneratorActions {
 
     void outputPush() {
         genOut.appendCommand("PUSH");
+    }
+}
+
+class TempVariableGenerator {
+    private static int currentIter = 0;
+    private static List<String> tempVars = new ArrayList<String>();
+
+    static String generateTempVar() {
+        String currentTemp = "Tempvar" + currentIter++;
+        tempVars.add(currentTemp);
+        return currentTemp;
+    }
+
+    static String getFormattedTempVars() {
+        StringBuilder total = new StringBuilder();
+        for (String s : tempVars) total.append(s).append(" 0\n");
+
+        return total.toString();
     }
 }
