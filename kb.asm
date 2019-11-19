@@ -1,10 +1,35 @@
 PUSH
-LOAD 5
+LOAD 1
 STACKW 0
+PUSH
+LOAD 2
+STACKW 0
+PUSH
+LOAD 3
+STACKW 0
+READ Tempvar0
+LOAD Tempvar0
+STACKW 0
+PUSH
+LOAD 4
+STACKW 0
+STORE Tempvar1
+WRITE Tempvar1
 STACKR 0
-STORE Temporary
-LOAD 5
-STORE Temporary
-WRITE Temporary
+POP
+STORE Tempvar2
+WRITE Tempvar2
+STACKR 0
+STORE Tempvar3
+WRITE Tempvar3
+STACKR 1
+STORE Tempvar4
+WRITE Tempvar4
+STACKR 2
+POP
 STOP
-Temporary 0
+Tempvar0 0
+Tempvar1 0
+Tempvar2 0
+Tempvar3 0
+Tempvar4 0

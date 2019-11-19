@@ -15,9 +15,7 @@ import java.util.Stack;
 public class GeneratorStack {
     private Stack<Token> varStack = new Stack<Token>();
 
-    void push(Token tk) throws Exception {
-        if(varStack.size() == 100)
-            throw new Exception("StaticStack: Overflow! Too many variables stored on stack!");
+    void push(Token tk) {
         varStack.push(tk);
     }
 
@@ -25,7 +23,7 @@ public class GeneratorStack {
         varStack.pop();
     }
 
-    public int find(Token tk) {
+    int find(Token tk) {
         int stackPos = varStack.size() - 1;
         for (; stackPos >= 0; stackPos-- ) {
             if(varStack.get(stackPos).getTokenValue().equals(tk.getTokenValue()))

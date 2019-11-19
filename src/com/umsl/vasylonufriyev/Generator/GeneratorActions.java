@@ -2,10 +2,11 @@ package com.umsl.vasylonufriyev.Generator;
 
 import com.umsl.vasylonufriyev.DataStructures.ProgramNode;
 import com.umsl.vasylonufriyev.DataStructures.Token;
-import com.umsl.vasylonufriyev.StaticSemantics.StaticStack;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.umsl.vasylonufriyev.Generator.GeneratorTraversal.treePreorderGeneratorTraversal;
 
 class GeneratorActions {
 
@@ -30,25 +31,60 @@ class GeneratorActions {
     }
 
     void outputROFactorLT(ProgramNode node) {
+        for (int i = 0; i < node.children.length; i++) { //Check children L -> R
+            if (node.children[i] != null) {
+                treePreorderGeneratorTraversal(node.children[i]);
+            }
+        }
     }
 
     void outputROFactorGT(ProgramNode node) {
+        for (int i = 0; i < node.children.length; i++) { //Check children L -> R
+            if (node.children[i] != null) {
+                treePreorderGeneratorTraversal(node.children[i]);
+            }
+        }
     }
 
     void outputRO(ProgramNode node) {
+        for (int i = 0; i < node.children.length; i++) { //Check children L -> R
+            if (node.children[i] != null) {
+                treePreorderGeneratorTraversal(node.children[i]);
+            }
+        }
     }
 
     void outputAssign(ProgramNode node) {
+        for (int i = 0; i < node.children.length; i++) { //Check children L -> R
+            if (node.children[i] != null) {
+                treePreorderGeneratorTraversal(node.children[i]);
+            }
+        }
     }
 
     void outputLoop(ProgramNode node) {
+        for (int i = 0; i < node.children.length; i++) { //Check children L -> R
+            if (node.children[i] != null) {
+                treePreorderGeneratorTraversal(node.children[i]);
+            }
+        }
     }
 
     void outputIf(ProgramNode node) {
+        for (int i = 0; i < node.children.length; i++) { //Check children L -> R
+            if (node.children[i] != null) {
+                treePreorderGeneratorTraversal(node.children[i]);
+            }
+        }
     }
 
     void outputOut(ProgramNode node) {
         String temp1 = generateTempVariable();
+        for (int i = 0; i < node.children.length; i++) { //Check children L -> R
+            if (node.children[i] != null) {
+                treePreorderGeneratorTraversal(node.children[i]);
+            }
+        }
         genOut.appendCommand("STORE " + temp1);
         genOut.appendCommand("WRITE " + temp1);
     }
@@ -66,12 +102,27 @@ class GeneratorActions {
 
     /* NO CODE GENERATION REQUIRED */
     void outputStat(ProgramNode node) {
+        for (int i = 0; i < node.children.length; i++) { //Check children L -> R
+            if (node.children[i] != null) {
+                treePreorderGeneratorTraversal(node.children[i]);
+            }
+        }
     }
 
     void outputMStat(ProgramNode node) {
+        for (int i = 0; i < node.children.length; i++) { //Check children L -> R
+            if (node.children[i] != null) {
+                treePreorderGeneratorTraversal(node.children[i]);
+            }
+        }
     }
 
     void outputStats(ProgramNode node) {
+        for (int i = 0; i < node.children.length; i++) { //Check children L -> R
+            if (node.children[i] != null) {
+                treePreorderGeneratorTraversal(node.children[i]);
+            }
+        }
     }
 
     void outputR(ProgramNode node) {
@@ -82,29 +133,60 @@ class GeneratorActions {
                 genOut.appendCommand("LOAD " + tk.getTokenValue());
             }
         }
+
+        for (int i = 0; i < node.children.length; i++) { //Check children L -> R
+            if (node.children[i] != null) {
+                treePreorderGeneratorTraversal(node.children[i]);
+            }
+        }
     }
 
     void outputM(ProgramNode node) {
+        for (int i = 0; i < node.children.length; i++) { //Check children L -> R
+            if (node.children[i] != null) {
+                treePreorderGeneratorTraversal(node.children[i]);
+            }
+        }
     }
 
     void outputNFactor(ProgramNode node) {
+        for (int i = 0; i < node.children.length; i++) { //Check children L -> R
+            if (node.children[i] != null) {
+                treePreorderGeneratorTraversal(node.children[i]);
+            }
+        }
     }
 
     void outputN(ProgramNode node) {
+        for (int i = 0; i < node.children.length; i++) { //Check children L -> R
+            if (node.children[i] != null) {
+                treePreorderGeneratorTraversal(node.children[i]);
+            }
+        }
     }
 
     void outputA(ProgramNode node) {
-        /*for (Token tk : node.tokenData) {
-            if (tk != null && tk.getTokenType().equals("MINUS_TK")) {
-                genOut.appendCommand("SUB Temporary");
+        for (int i = 0; i < node.children.length; i++) { //Check children L -> R
+            if (node.children[i] != null) {
+                treePreorderGeneratorTraversal(node.children[i]);
             }
-        }*/
+        }
     }
 
     void outputExprFactor(ProgramNode node) {
+        for (int i = 0; i < node.children.length; i++) { //Check children L -> R
+            if (node.children[i] != null) {
+                treePreorderGeneratorTraversal(node.children[i]);
+            }
+        }
     }
 
     void outputExpr(ProgramNode node) {
+        for (int i = 0; i < node.children.length; i++) { //Check children L -> R
+            if (node.children[i] != null) {
+                treePreorderGeneratorTraversal(node.children[i]);
+            }
+        }
     }
 
     void outputVars(ProgramNode node) {
@@ -122,6 +204,11 @@ class GeneratorActions {
     }
 
     void outputProgram(ProgramNode node) {
+        for (int i = 0; i < node.children.length; i++) { //Check children L -> R
+            if (node.children[i] != null) {
+                treePreorderGeneratorTraversal(node.children[i]);
+            }
+        }
     }
 
     void outputPush() {

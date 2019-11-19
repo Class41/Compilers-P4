@@ -15,24 +15,24 @@ import java.util.Stack;
 
 public class GeneratorTraversal {
 
-    private final GeneratorCore generator;
+    private static GeneratorCore generator = null;
     private ProgramNode parseResult;
-    private GeneratorStack stack;
-    private Stack<GeneratorBlockContainer> blockStack = new Stack<GeneratorBlockContainer>();
+    private static GeneratorStack stack;
+    private static Stack<GeneratorBlockContainer> blockStack = new Stack<GeneratorBlockContainer>();
 
     public GeneratorTraversal(ProgramNode parseResult, GeneratorCore generator) {
         this.parseResult = parseResult;
-        this.stack = new GeneratorStack();
-        this.generator = generator;
+        stack = new GeneratorStack();
+        GeneratorTraversal.generator = generator;
         generator.setStaticStackReference(stack);
     }
 
     public void beginGenerate() throws Exception {
-        treePreorderStaticCheck(parseResult);
+        treePreorderGeneratorTraversal(parseResult);
         generator.generateFile();
     }
 
-    private void treePreorderStaticCheck(ProgramNode node) throws Exception {
+    static void treePreorderGeneratorTraversal(ProgramNode node) {
         if (node.getNodeLabel().equals("<Block>")) //If we are on a block node, push a block scope onto the stack
             blockStack.push(new GeneratorBlockContainer());
 
@@ -40,12 +40,12 @@ public class GeneratorTraversal {
             checkMe(node); //Check current node
             for (int i = 0; i < node.children.length; i++) { //Check children L -> R
                 if (node.children[i] != null) {
-                    treePreorderStaticCheck(node.children[i]);
+                    treePreorderGeneratorTraversal(node.children[i]);
                 }
             }
-        } else {
-            generator.generateCodeForNode(node);
         }
+
+        generator.generateCodeForNode(node);
 
         if (node.getNodeLabel().equals("<Block>")) { //Delete this block, we've visited all children and are about to go up
             for (int i = 0; i < blockStack.peek().getVarCount(); i++) {
@@ -56,22 +56,11 @@ public class GeneratorTraversal {
         }
     }
 
-    private void checkMe(ProgramNode node) throws Exception {
+    static void checkMe(ProgramNode node) {
         for (Token tk : node.tokenData) { //For each token
             if (node.getNodeLabel().equals("<Vars>")) { //If it is a vars block
                 if (tk != null && tk.getTokenType().equals("IDENTIFIER_TK")) { //Get the identifier token
                     if (blockStack.size() > 0 && blockStack.peek() != null) { //check is block scope is null or not
-                        if (blockStack.peek().getVarCount() > 0) { //check if vars exist in this scope already
-                            int stackpos = stack.find(tk); //get position of current tk in stack
-                            if (stackpos > -1 && stackpos < blockStack.peek().getVarCount()) { //check if it is in current bound
-                                throw new Exception(
-                                        "STATICSEM:L"
-                                                + tk.getTokenLine()
-                                                + ": "
-                                                + tk.getTokenValue() +
-                                                " is already defined in this scope");
-                            }
-                        }
                         blockStack.peek().setVarCount(blockStack.peek().getVarCount() + 1); //increment +1 if block exist
                     }
                     stack.push(tk); //push onto stack anyways, block or no block. this supports Global variables
