@@ -182,9 +182,24 @@ class GeneratorActions {
     }
 
     void outputExpr(ProgramNode node) {
+        int factor = -1;
         for (int i = 0; i < node.children.length; i++) { //Check children L -> R
-            if (node.children[i] != null) {
-                treePreorderGeneratorTraversal(node.children[i]);
+            if (node.children[i] != null && node.children[i].getNodeLabel().equals("<ExprFactor>")) {
+                factor = i;
+            }
+        }
+
+        for (int i = 0; i < node.children.length; i++) { //Check children L -> R
+            if (node.children[i] != null && node.children[i].getNodeLabel().equals("<A>")) {
+                if (factor > -1) {
+                    treePreorderGeneratorTraversal(node.children[factor]);
+                    String temp1 = generateTempVariable();
+                    genOut.appendCommand("STORE " + temp1);
+                    treePreorderGeneratorTraversal(node.children[i]);
+                    genOut.appendCommand("ADD " + temp1);
+                } else {
+                    treePreorderGeneratorTraversal(node.children[i]);
+                }
             }
         }
     }

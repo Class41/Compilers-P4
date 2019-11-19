@@ -10,22 +10,26 @@ STACKW 0
 PUSH
 LOAD 4
 STACKW 0
+LOAD 6
+STORE Tempvar1
 STACKR 0
+ADD Tempvar1
 STORE Tempvar0
 WRITE Tempvar0
 POP
 STACKR 0
-STORE Tempvar1
-WRITE Tempvar1
-STACKR 1
 STORE Tempvar2
 WRITE Tempvar2
-STACKR 2
+STACKR 1
 STORE Tempvar3
 WRITE Tempvar3
+STACKR 2
+STORE Tempvar4
+WRITE Tempvar4
 POP
 STOP
 Tempvar0 0
 Tempvar1 0
 Tempvar2 0
 Tempvar3 0
+Tempvar4 0
