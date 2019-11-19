@@ -37,12 +37,14 @@ public class StaticCheck {
         if (node.getNodeLabel().equals("<Block>")) //If we are on a block node, push a block scope onto the stack
             blockStack.push(new BlockContainer());
 
+        generator.generateCodeForNode(node, 0);
         checkMe(node); //Check current node
         for (int i = 0; i < node.children.length; i++) { //Check children L -> R
             if (node.children[i] != null) {
                 treePreorderStaticCheck(node.children[i]);
             }
         }
+        generator.generateCodeForNode(node, 2);
 
         if (node.getNodeLabel().equals("<Block>")) { //Delete this block, we've visited all children and are about to go up
             for (int i = 0; i < blockStack.peek().getVarCount(); i++) {
@@ -54,7 +56,6 @@ public class StaticCheck {
     }
 
     private void checkMe(ProgramNode node) throws Exception {
-        generator.generateCodeForNode(node);
         for (Token tk : node.tokenData) { //For each token
             if (node.getNodeLabel().equals("<Vars>")) { //If it is a vars block
                 if (tk != null && tk.getTokenType().equals("IDENTIFIER_TK")) { //Get the identifier token

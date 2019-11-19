@@ -15,6 +15,13 @@ READ Temporary
 LOAD Temporary
 STACKW 0
 POP
+STORE Temporary
+WRITE Temporary
 POP
+STORE Temporary
+WRITE Temporary
 POP
+STORE Temporary
+WRITE Temporary
+STOP
 Temporary 0

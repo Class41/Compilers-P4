@@ -41,14 +41,14 @@ class GeneratorActions {
     }
 
     void outputOut(ProgramNode node) {
+        genOut.appendCommand("WRITE Temporary");
     }
 
     void outputIn(ProgramNode node) {
         genOut.appendCommand("READ Temporary");
         genOut.appendCommand("LOAD Temporary");
-        for ( Token tk : node.tokenData ) {
-            if (tk != null && tk.getTokenType().equals("IDENTIFIER_TK"))
-            {
+        for (Token tk : node.tokenData) {
+            if (tk != null && tk.getTokenType().equals("IDENTIFIER_TK")) {
                 genOut.appendCommand("STACKW " + varStack.find(tk));
             }
         }
@@ -64,6 +64,16 @@ class GeneratorActions {
     }
 
     void outputR(ProgramNode node) {
+        for (Token tk : node.tokenData) {
+            if (tk != null && tk.getTokenType().equals("IDENTIFIER_TK")) {
+                genOut.appendCommand("STACKR " + varStack.find(tk));
+                genOut.appendCommand("STORE Temporary");
+            }
+            else if (tk != null && tk.getTokenType().equals("NUMBER_TK")) {
+                genOut.appendCommand("LOAD " + tk.getTokenValue());
+                genOut.appendCommand("STORE Temporary");
+            }
+        }
     }
 
     void outputM(ProgramNode node) {

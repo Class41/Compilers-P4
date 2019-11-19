@@ -11,70 +11,91 @@ public class GeneratorCore {
         this.usingFile = usingFile;
     }
 
-    public void generateCodeForNode(ProgramNode node) {
+    public void generateCodeForNode(ProgramNode node, int ordermode) { //0 = preorder, 1 = inorder, 2 = postorder
         switch (node.getNodeLabel()) {
             case "<Program>":
-                genActions.outputProgram(node);
+                if (ordermode == 0)
+                    genActions.outputProgram(node);
                 break;
             case "<Block>":
-                genActions.outputBlock(node);
+                if (ordermode == 0)
+                    genActions.outputBlock(node);
                 break;
             case "<Vars>":
-                genActions.outputVars(node);
+                if (ordermode == 0)
+                    genActions.outputVars(node);
                 break;
             case "<Expr>":
-                genActions.outputExpr(node);
+                if (ordermode == 0)
+                    genActions.outputExpr(node);
                 break;
             case "<ExprFactor>":
-                genActions.outputExprFactor(node);
+                if (ordermode == 0)
+                    genActions.outputExprFactor(node);
                 break;
             case "<A>":
-                genActions.outputA(node);
+                if (ordermode == 0)
+                    genActions.outputA(node);
                 break;
             case "<N>":
-                genActions.outputN(node);
+                if (ordermode == 0)
+                    genActions.outputN(node);
                 break;
             case "<NFactor>":
-                genActions.outputNFactor(node);
+                if (ordermode == 0)
+                    genActions.outputNFactor(node);
                 break;
             case "<M>":
-                genActions.outputM(node);
+                if (ordermode == 0)
+                    genActions.outputM(node);
                 break;
             case "<R>":
-                genActions.outputR(node);
+                if (ordermode == 0)
+                    genActions.outputR(node);
                 break;
             case "<Stats>":
-                genActions.outputStats(node);
+                if (ordermode == 0)
+                    genActions.outputStats(node);
                 break;
             case "<MStat>":
-                genActions.outputMStat(node);
+                if (ordermode == 0)
+                    genActions.outputMStat(node);
                 break;
             case "<Stat>":
-                genActions.outputStat(node);
+                if (ordermode == 0)
+                    genActions.outputStat(node);
                 break;
             case "<In>":
-                genActions.outputIn(node);
+                if (ordermode == 0)
+                    genActions.outputIn(node);
                 break;
             case "<Out>":
-                genActions.outputOut(node);
+                if (ordermode == 2)
+                    genActions.outputOut(node);
                 break;
             case "<If>":
-                genActions.outputIf(node);
+                if (ordermode == 0)
+                    genActions.outputIf(node);
                 break;
             case "<Loop>":
-                genActions.outputLoop(node);
+                if (ordermode == 0)
+                    genActions.outputLoop(node);
                 break;
             case "<Assign>":
-                genActions.outputAssign(node);
+                if (ordermode == 0)
+                    genActions.outputAssign(node);
                 break;
             case "<RO>":
-                genActions.outputRO(node);
+                if (ordermode == 0)
+                    genActions.outputRO(node);
                 break;
             case "<ROFactorGT>":
-                genActions.outputROFactorGT(node);
+                if (ordermode == 0)
+                    genActions.outputROFactorGT(node);
                 break;
             case "<ROFactorLT>":
-                genActions.outputROFactorLT(node);
+                if (ordermode == 0)
+                    genActions.outputROFactorLT(node);
                 break;
             default:
                 System.out.println("Unrecognized token: " + node.getNodeLabel());
@@ -85,8 +106,14 @@ public class GeneratorCore {
     public void generatePop() {
         genActions.outputPop();
     }
-    public void generatePush() { genActions.outputPush(); }
-    public void generatePush(int pos) { genActions.outputPush(pos); }
+
+    public void generatePush() {
+        genActions.outputPush();
+    }
+
+    public void generatePush(int pos) {
+        genActions.outputPush(pos);
+    }
 
 
     public void generateFile() {
