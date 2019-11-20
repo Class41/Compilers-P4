@@ -76,9 +76,143 @@ class GeneratorActions {
     }
 
     void outputLoop(ProgramNode node) {
+        int Expr1pos = -1, ROpos = -1, Expr2pos = -1, Statpos = -1;
+
         for (int i = 0; i < node.children.length; i++) { //Check children L -> R
-            if (node.children[i] != null) {
-                treePreorderGeneratorTraversal(node.children[i]);
+            if (node.children[i] != null && node.children[i].getNodeLabel().equals("<Expr>")) {
+                Expr1pos = i;
+                for (int j = i + 1; j < node.children.length; j++) { //Check children L -> R
+                    if (node.children[j] != null && node.children[j].getNodeLabel().equals("<RO>")) {
+                        ROpos = j;
+                        for (int k = j + 1; k < node.children.length; k++) { //Check children L -> R
+                            if (node.children[k] != null && node.children[k].getNodeLabel().equals("<Expr>")) {
+                                Expr2pos = k;
+                                for (int l = k + 1; l < node.children.length; l++) { //Check children L -> R
+                                    if (node.children[l] != null && node.children[l].getNodeLabel().equals("<Stat>")) {
+                                        Statpos = l;
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+        String temp1 = generateTempVariable();
+        String temp2 = generateTempVariable();
+
+        if (Expr1pos > -1)
+            treePreorderGeneratorTraversal(node.children[Expr1pos]);
+        genOut.appendCommand("STORE " + temp1);
+
+        if (Expr2pos > -1)
+            treePreorderGeneratorTraversal(node.children[Expr2pos]);
+        genOut.appendCommand("STORE " + temp2);
+
+        StringBuilder operator = new StringBuilder();
+
+        if (ROpos > -1) {
+            for (Token t : node.children[ROpos].tokenData) {
+                if (t != null) {
+                    operator.append(t.getTokenValue());
+                }
+            }
+
+            for (ProgramNode pn : node.children[ROpos].children) {
+                if (pn != null) {
+                    for (Token t : pn.tokenData) {
+                        if (t != null) {
+                            operator.append(t.getTokenValue());
+                        }
+                    }
+                }
+            }
+        }
+
+        switch (operator.toString()) {
+            case "<>": {
+                String anchor1 = generateUniqueAnchor();
+                String anchor2 = generateUniqueAnchor();
+                genOut.appendCommand(anchor2 + ": NOOP");
+                genOut.appendCommand("LOAD " + temp1);
+                genOut.appendCommand("SUB " + temp2);
+                genOut.appendCommand("BRZERO " + anchor1);
+                if (Statpos > -1)
+                    treePreorderGeneratorTraversal(node.children[Statpos]);
+                genOut.appendCommand("BR " + anchor2);
+                genOut.appendCommand(anchor1 + ": NOOP");
+                break;
+            }
+            case "=": {
+                String anchor1 = generateUniqueAnchor();
+                String anchor2 = generateUniqueAnchor();
+                genOut.appendCommand(anchor2 + ": NOOP");
+                genOut.appendCommand("LOAD " + temp1);
+                genOut.appendCommand("SUB " + temp2);
+                genOut.appendCommand("BRPOS " + anchor1);
+                genOut.appendCommand("BRNEG " + anchor1);
+                if (Statpos > -1)
+                    treePreorderGeneratorTraversal(node.children[Statpos]);
+                genOut.appendCommand("BR " + anchor2);
+                genOut.appendCommand(anchor1 + ": NOOP");
+                break;
+            }
+            case "<": {
+                String anchor1 = generateUniqueAnchor();
+                String anchor2 = generateUniqueAnchor();
+                genOut.appendCommand(anchor2 + ": NOOP");
+                genOut.appendCommand("LOAD " + temp1);
+                genOut.appendCommand("SUB " + temp2);
+                genOut.appendCommand("BRZPOS " + anchor1);
+                if (Statpos > -1)
+                    treePreorderGeneratorTraversal(node.children[Statpos]);
+                genOut.appendCommand("BR " + anchor2);
+                genOut.appendCommand(anchor1 + ": NOOP");
+                break;
+            }
+            case ">": {
+                String anchor1 = generateUniqueAnchor();
+                String anchor2 = generateUniqueAnchor();
+                genOut.appendCommand(anchor2 + ": NOOP");
+                genOut.appendCommand("LOAD " + temp1);
+                genOut.appendCommand("SUB " + temp2);
+                genOut.appendCommand("BRZNEG " + anchor1);
+                if (Statpos > -1)
+                    treePreorderGeneratorTraversal(node.children[Statpos]);
+                genOut.appendCommand("BR " + anchor2);
+                genOut.appendCommand(anchor1 + ": NOOP");
+                break;
+            }
+            case ">>": {
+                String anchor1 = generateUniqueAnchor();
+                String anchor2 = generateUniqueAnchor();
+                genOut.appendCommand(anchor2 + ": NOOP");
+                genOut.appendCommand("LOAD " + temp1);
+                genOut.appendCommand("SUB " + temp2);
+                genOut.appendCommand("BRNEG " + anchor1);
+                if (Statpos > -1)
+                    treePreorderGeneratorTraversal(node.children[Statpos]);
+                genOut.appendCommand("BR " + anchor2);
+                genOut.appendCommand(anchor1 + ": NOOP");
+                break;
+            }
+            case "<<": {
+                String anchor1 = generateUniqueAnchor();
+                String anchor2 = generateUniqueAnchor();
+                genOut.appendCommand(anchor2 + ": NOOP");
+                genOut.appendCommand("LOAD " + temp1);
+                genOut.appendCommand("SUB " + temp2);
+                genOut.appendCommand("BRPOS " + anchor1);
+                if (Statpos > -1)
+                    treePreorderGeneratorTraversal(node.children[Statpos]);
+                genOut.appendCommand("BR " + anchor2);
+                genOut.appendCommand(anchor1 + ": NOOP");
+                break;
             }
         }
     }
