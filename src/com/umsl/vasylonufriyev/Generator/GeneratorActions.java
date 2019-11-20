@@ -159,7 +159,7 @@ class GeneratorActions {
                 Npos = i;
 
                 for (Token t : node.tokenData) {
-                    if(t.getTokenType().equals("MULT_TK") || t.getTokenType().equals("DIVIDE_TK"))
+                    if(t != null && (t.getTokenType().equals("MULT_TK") || t.getTokenType().equals("DIVIDE_TK")))
                     {
                         operator = t.getTokenType();
                     }
@@ -185,30 +185,31 @@ class GeneratorActions {
             }
         }
 
+        if(Mpos > -1)
         treePreorderGeneratorTraversal(node.children[Mpos]);
         String temp1 = generateTempVariable();
         genOut.appendCommand("STORE " + temp1);
+        if(NFactorpos > -1)
         treePreorderGeneratorTraversal(node.children[NFactorpos]);
 
         String operator = null;
-        for (int i = 0; i < node.children[NFactorpos].children.length; i++) { //Check children L -> R
-            if (node.children[NFactorpos].children[i] != null && node.children[NFactorpos].children[i].getNodeLabel().equals("<N>")) {
-                for (Token t : node.tokenData) {
-                    if(t.getTokenType().equals("MULT_TK") || t.getTokenType().equals("DIVIDE_TK"))
-                    {
-                        operator = t.getTokenType();
+        if(NFactorpos > -1) {
+            for (int i = 0; i < node.children[NFactorpos].children.length; i++) { //Check children L -> R
+                if (node.children[NFactorpos].children[i] != null && node.children[NFactorpos].children[i].getNodeLabel().equals("<N>")) {
+                    for (Token t : node.tokenData) {
+                        if (t != null && (t.getTokenType().equals("MULT_TK") || t.getTokenType().equals("DIVIDE_TK"))) {
+                            operator = t.getTokenType();
+                        }
                     }
                 }
             }
-        }
 
-        if(operator != null)
-        {
-            if(operator.equals("MULT_TK"))
-            {
-                genOut.appendCommand("MULT " + temp1);
-            } else {
-                genOut.appendCommand("DIV " + temp1);
+            if (operator != null) {
+                if (operator.equals("MULT_TK")) {
+                    genOut.appendCommand("MULT " + temp1);
+                } else {
+                    genOut.appendCommand("DIV " + temp1);
+                }
             }
         }
     }
