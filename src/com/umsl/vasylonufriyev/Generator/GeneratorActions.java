@@ -183,6 +183,14 @@ class GeneratorActions {
             if (Statpos > -1)
                 treePreorderGeneratorTraversal(node.children[Statpos]);
             genOut.appendCommand(anchor1 + ": NOOP");
+        } else if (operator.toString().equals("<<")) {
+            String anchor1 = generateUniqueAnchor();
+            genOut.appendCommand("LOAD " + temp1);
+            genOut.appendCommand("SUB " + temp2);
+            genOut.appendCommand("BRPOS " + anchor1);
+            if (Statpos > -1)
+                treePreorderGeneratorTraversal(node.children[Statpos]);
+            genOut.appendCommand(anchor1 + ": NOOP");
         }
     }
 
