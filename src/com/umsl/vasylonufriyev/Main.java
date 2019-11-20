@@ -31,12 +31,12 @@ public class Main {
             return;
         }
 
-        System.out.println("~~ read " + parsedData.length + " lines. ~~");
+        //System.out.println("~~ read " + parsedData.length + " lines. ~~");
         Parser parser = new Parser(new ProgramDataBuffer(parsedData));
         ProgramNode parseResult = null;
         try {
             parseResult = parser.beginParse();
-            System.out.println("Parser: PASS");
+            //System.out.println("Parser: PASS");
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.exit(-1);
@@ -46,7 +46,7 @@ public class Main {
 
         try {
             staticSemanticChecker.beginCheck();
-            System.out.println("Static Semantics Check: PASS");
+            //System.out.println("Static Semantics Check: PASS");
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.exit(-1);

@@ -17,10 +17,10 @@ public class ParseFile {
 
     public ParseFile(String cmdArg) {
         String qualifiedFileName = cmdArg;
-        System.out.println("Filename detected. Attempt to read from file.");
+        //System.out.println("Filename detected. Attempt to read from file.");
 
         if (cmdArg.endsWith(".fs19")) { //check if extension exists
-            System.out.println("Extension detected. Proceeding normally.");
+            //System.out.println("Extension detected. Proceeding normally.");
         } else { //if not, append it
             qualifiedFileName += EXTENSION;
         }
