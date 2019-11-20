@@ -56,7 +56,7 @@ public class GeneratorTraversal {
         }
     }
 
-    static void checkMe(ProgramNode node) {
+    private static void checkMe(ProgramNode node) {
         for (Token tk : node.tokenData) { //For each token
             if (node.getNodeLabel().equals("<Vars>")) { //If it is a vars block
                 if (tk != null && tk.getTokenType().equals("IDENTIFIER_TK")) { //Get the identifier token

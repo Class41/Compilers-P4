@@ -81,7 +81,7 @@ public class GeneratorCore {
         }
     }
 
-    public void generatePop() {
+    void generatePop() {
         genActions.outputPop();
     }
 
@@ -89,11 +89,11 @@ public class GeneratorCore {
         genActions.outputPush();
     }
 
-    public void generateFile() {
+    void generateFile() {
         genActions.generateFile();
     }
 
-    public void setStaticStackReference(GeneratorStack stack) {
+    void setStaticStackReference(GeneratorStack stack) {
         genActions = new GeneratorActions(usingFile, stack);
     }
 }

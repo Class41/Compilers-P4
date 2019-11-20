@@ -1,9 +1,10 @@
 PUSH
-LOAD 2
+LOAD 0
 STACKW 0
 PUSH
 LOAD 3
 STACKW 0
+Anchor1: NOOP
 STORE Tempvar2
 STACKR 1
 STORE Tempvar0
@@ -13,21 +14,19 @@ STORE Tempvar1
 LOAD Tempvar0
 SUB Tempvar1
 BRPOS Anchor0
-STORE Tempvar6
+BRNEG Anchor0
+STORE Tempvar5
 STACKR 1
 STORE Tempvar4
+WRITE Tempvar4
+STORE Tempvar6
+LOAD 1
 STORE Tempvar7
-LOAD 2
-STORE Tempvar5
-LOAD Tempvar4
-SUB Tempvar5
-BRPOS Anchor1
-BRNEG Anchor1
-STORE Tempvar9
-STACKR 1
 STORE Tempvar8
-WRITE Tempvar8
-Anchor1: NOOP
+STACKR 1
+ADD Tempvar7
+STACKW 1
+BR Anchor1
 Anchor0: NOOP
 POP
 POP
@@ -41,4 +40,3 @@ Tempvar5 0
 Tempvar6 0
 Tempvar7 0
 Tempvar8 0
-Tempvar9 0

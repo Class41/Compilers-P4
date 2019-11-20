@@ -1,8 +1,10 @@
 start
-var x : 2
+var x : 0
 var y : 3
-cond (( x << y ))
-cond (( x = 2 ))
+iterate (( x = y ))
+start
 out x;
+x << x + 1;
+stop;
 stop
 

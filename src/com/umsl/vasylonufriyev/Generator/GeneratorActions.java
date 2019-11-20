@@ -103,17 +103,6 @@ class GeneratorActions {
             }
         }
 
-        String temp1 = generateTempVariable();
-        String temp2 = generateTempVariable();
-
-        if (Expr1pos > -1)
-            treePreorderGeneratorTraversal(node.children[Expr1pos]);
-        genOut.appendCommand("STORE " + temp1);
-
-        if (Expr2pos > -1)
-            treePreorderGeneratorTraversal(node.children[Expr2pos]);
-        genOut.appendCommand("STORE " + temp2);
-
         StringBuilder operator = new StringBuilder();
 
         if (ROpos > -1) {
@@ -139,6 +128,16 @@ class GeneratorActions {
                 String anchor1 = generateUniqueAnchor();
                 String anchor2 = generateUniqueAnchor();
                 genOut.appendCommand(anchor2 + ": NOOP");
+                String temp1 = generateTempVariable();
+                String temp2 = generateTempVariable();
+
+                if (Expr1pos > -1)
+                    treePreorderGeneratorTraversal(node.children[Expr1pos]);
+                genOut.appendCommand("STORE " + temp1);
+
+                if (Expr2pos > -1)
+                    treePreorderGeneratorTraversal(node.children[Expr2pos]);
+                genOut.appendCommand("STORE " + temp2);
                 genOut.appendCommand("LOAD " + temp1);
                 genOut.appendCommand("SUB " + temp2);
                 genOut.appendCommand("BRZERO " + anchor1);
@@ -152,6 +151,16 @@ class GeneratorActions {
                 String anchor1 = generateUniqueAnchor();
                 String anchor2 = generateUniqueAnchor();
                 genOut.appendCommand(anchor2 + ": NOOP");
+                String temp1 = generateTempVariable();
+                String temp2 = generateTempVariable();
+
+                if (Expr1pos > -1)
+                    treePreorderGeneratorTraversal(node.children[Expr1pos]);
+                genOut.appendCommand("STORE " + temp1);
+
+                if (Expr2pos > -1)
+                    treePreorderGeneratorTraversal(node.children[Expr2pos]);
+                genOut.appendCommand("STORE " + temp2);
                 genOut.appendCommand("LOAD " + temp1);
                 genOut.appendCommand("SUB " + temp2);
                 genOut.appendCommand("BRPOS " + anchor1);
@@ -166,6 +175,16 @@ class GeneratorActions {
                 String anchor1 = generateUniqueAnchor();
                 String anchor2 = generateUniqueAnchor();
                 genOut.appendCommand(anchor2 + ": NOOP");
+                String temp1 = generateTempVariable();
+                String temp2 = generateTempVariable();
+
+                if (Expr1pos > -1)
+                    treePreorderGeneratorTraversal(node.children[Expr1pos]);
+                genOut.appendCommand("STORE " + temp1);
+
+                if (Expr2pos > -1)
+                    treePreorderGeneratorTraversal(node.children[Expr2pos]);
+                genOut.appendCommand("STORE " + temp2);
                 genOut.appendCommand("LOAD " + temp1);
                 genOut.appendCommand("SUB " + temp2);
                 genOut.appendCommand("BRZPOS " + anchor1);
@@ -179,6 +198,16 @@ class GeneratorActions {
                 String anchor1 = generateUniqueAnchor();
                 String anchor2 = generateUniqueAnchor();
                 genOut.appendCommand(anchor2 + ": NOOP");
+                String temp1 = generateTempVariable();
+                String temp2 = generateTempVariable();
+
+                if (Expr1pos > -1)
+                    treePreorderGeneratorTraversal(node.children[Expr1pos]);
+                genOut.appendCommand("STORE " + temp1);
+
+                if (Expr2pos > -1)
+                    treePreorderGeneratorTraversal(node.children[Expr2pos]);
+                genOut.appendCommand("STORE " + temp2);
                 genOut.appendCommand("LOAD " + temp1);
                 genOut.appendCommand("SUB " + temp2);
                 genOut.appendCommand("BRZNEG " + anchor1);
@@ -192,6 +221,16 @@ class GeneratorActions {
                 String anchor1 = generateUniqueAnchor();
                 String anchor2 = generateUniqueAnchor();
                 genOut.appendCommand(anchor2 + ": NOOP");
+                String temp1 = generateTempVariable();
+                String temp2 = generateTempVariable();
+
+                if (Expr1pos > -1)
+                    treePreorderGeneratorTraversal(node.children[Expr1pos]);
+                genOut.appendCommand("STORE " + temp1);
+
+                if (Expr2pos > -1)
+                    treePreorderGeneratorTraversal(node.children[Expr2pos]);
+                genOut.appendCommand("STORE " + temp2);
                 genOut.appendCommand("LOAD " + temp1);
                 genOut.appendCommand("SUB " + temp2);
                 genOut.appendCommand("BRNEG " + anchor1);
@@ -205,6 +244,16 @@ class GeneratorActions {
                 String anchor1 = generateUniqueAnchor();
                 String anchor2 = generateUniqueAnchor();
                 genOut.appendCommand(anchor2 + ": NOOP");
+                String temp1 = generateTempVariable();
+                String temp2 = generateTempVariable();
+
+                if (Expr1pos > -1)
+                    treePreorderGeneratorTraversal(node.children[Expr1pos]);
+                genOut.appendCommand("STORE " + temp1);
+
+                if (Expr2pos > -1)
+                    treePreorderGeneratorTraversal(node.children[Expr2pos]);
+                genOut.appendCommand("STORE " + temp2);
                 genOut.appendCommand("LOAD " + temp1);
                 genOut.appendCommand("SUB " + temp2);
                 genOut.appendCommand("BRPOS " + anchor1);
