@@ -1,0 +1,9 @@
+var number : 0
+
+start
+   in number;
+   cond (( number < 0 ))
+   start
+      out 1;
+   stop;
+stop

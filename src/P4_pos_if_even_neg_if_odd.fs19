@@ -1,0 +1,13 @@
+start
+   var target : 0
+   var current : 0
+   var output : 1
+   in target;
+   iterate (( current < target ))
+   start
+      current << current + 1;
+      output << output * -1;
+   stop;
+   out output;
+stop
+

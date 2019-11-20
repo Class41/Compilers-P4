@@ -1,0 +1,8 @@
+var firstnumber : 0
+var secondnumber : 0
+start
+  in firstnumber;
+  in secondnumber;
+  firstnumber << firstnumber * secondnumber;
+  out firstnumber;
+stop
