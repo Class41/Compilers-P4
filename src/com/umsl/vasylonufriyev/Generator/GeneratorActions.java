@@ -109,6 +109,7 @@ class GeneratorActions {
         }
     }
 
+    /* NO CODE GENERATION REQUIRED */
     void outputMStat(ProgramNode node) {
         for (int i = 0; i < node.children.length; i++) { //Check children L -> R
             if (node.children[i] != null) {
@@ -117,6 +118,7 @@ class GeneratorActions {
         }
     }
 
+    /* NO CODE GENERATION REQUIRED */
     void outputStats(ProgramNode node) {
         for (int i = 0; i < node.children.length; i++) { //Check children L -> R
             if (node.children[i] != null) {
@@ -142,10 +144,21 @@ class GeneratorActions {
     }
 
     void outputM(ProgramNode node) {
-        for (int i = 0; i < node.children.length; i++) { //Check children L -> R
-            if (node.children[i] != null) {
-                treePreorderGeneratorTraversal(node.children[i]);
+        int Mpos = -1, Rpos = -1;
+
+        for (int i = 0; i < node.children.length; i++) {
+            if (node.children[i] != null && node.children[i].getNodeLabel().equals("<M>")) {
+                Mpos = i;
+            } else if (node.children[i] != null && node.children[i].getNodeLabel().equals("<R>")) {
+                Rpos = i;
             }
+        }
+
+        if (Mpos > -1) {
+            treePreorderGeneratorTraversal(node.children[Mpos]);
+            genOut.appendCommand("MULT -1");
+        } else if (Rpos > -1) {
+            treePreorderGeneratorTraversal(node.children[Rpos]);
         }
     }
 
@@ -272,6 +285,7 @@ class GeneratorActions {
     void outputBlock(ProgramNode node) {
     }
 
+    /* NO CODE GENERATION REQUIRED */
     void outputProgram(ProgramNode node) {
         for (int i = 0; i < node.children.length; i++) { //Check children L -> R
             if (node.children[i] != null) {
