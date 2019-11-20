@@ -55,9 +55,20 @@ class GeneratorActions {
     }
 
     void outputAssign(ProgramNode node) {
+        int Exprpos = -1;
+
         for (int i = 0; i < node.children.length; i++) { //Check children L -> R
-            if (node.children[i] != null) {
-                treePreorderGeneratorTraversal(node.children[i]);
+            if (node.children[i] != null && node.children[i].getNodeLabel().equals("<Expr>")) {
+                Exprpos = i;
+            }
+        }
+
+        for (int i = 0; i < node.tokenData.length; i++)
+        {
+            if(node.tokenData[i] != null && node.tokenData[i].getTokenType().equals("IDENTIFIER_TK"))
+            {
+                treePreorderGeneratorTraversal(node.children[Exprpos]);
+                genOut.appendCommand("STACKW " + varStack.find(node.tokenData[i]));
             }
         }
     }
@@ -171,10 +182,7 @@ class GeneratorActions {
             }
         }
 
-        if (Npos > -1) {
-            treePreorderGeneratorTraversal(node.children[Npos]);
-        }
-
+        if (Npos > -1) treePreorderGeneratorTraversal(node.children[Npos]);
     }
 
     void outputN(ProgramNode node) {
@@ -199,8 +207,6 @@ class GeneratorActions {
                     }
                 }
             }
-
-
         }
         String temp1 = generateTempVariable();
         genOut.appendCommand("STORE " + temp1);
@@ -240,6 +246,7 @@ class GeneratorActions {
         }
     }
 
+    /* NO CODE GENERATION REQUIRED. HANDLED IN EXPR*/
     void outputExprFactor(ProgramNode node) {
         for (int i = 0; i < node.children.length; i++) { //Check children L -> R
             if (node.children[i] != null) {
