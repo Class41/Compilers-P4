@@ -2,6 +2,7 @@ start
 var x : 2
 var y : 3
 cond (( x << y ))
+cond (( x = 2 ))
 out x;
 stop
 
