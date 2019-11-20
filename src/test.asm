@@ -1,9 +1,13 @@
-LOAD 1000
 STORE Tempvar1
-LOAD 4
 STORE Tempvar2
-DIV Tempvar1
+LOAD 8
 STORE Tempvar3
+STORE Tempvar4
+LOAD 4
+STORE Tempvar5
+LOAD 1000
+DIV Tempvar5
+MULT Tempvar3
 STORE Tempvar0
 WRITE Tempvar0
 STOP
@@ -11,3 +15,5 @@ Tempvar0 0
 Tempvar1 0
 Tempvar2 0
 Tempvar3 0
+Tempvar4 0
+Tempvar5 0

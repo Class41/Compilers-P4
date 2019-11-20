@@ -158,8 +158,7 @@ class GeneratorActions {
             }
         }
 
-        if(Npos > -1)
-        {
+        if (Npos > -1) {
             treePreorderGeneratorTraversal(node.children[Npos]);
         }
 
@@ -167,6 +166,7 @@ class GeneratorActions {
 
     void outputN(ProgramNode node) {
         int Mpos = -1, NFactorpos = -1;
+        String operator = null;
 
         for (int i = 0; i < node.children.length; i++) { //Check children L -> R
             if (node.children[i] != null && node.children[i].getNodeLabel().equals("<M>")) {
@@ -175,15 +175,8 @@ class GeneratorActions {
                 NFactorpos = i;
             }
         }
-
-        if(Mpos > -1)
-        treePreorderGeneratorTraversal(node.children[Mpos]);
-        String temp1 = generateTempVariable();
-        genOut.appendCommand("STORE " + temp1);
-        String operator = "";
-
-        if(NFactorpos > -1){
-        treePreorderGeneratorTraversal(node.children[NFactorpos]);
+        if (NFactorpos > -1) {
+            treePreorderGeneratorTraversal(node.children[NFactorpos]);
             for (int i = 0; i < node.children[NFactorpos].children.length; i++) { //Check children L -> R
                 if (node.children[NFactorpos].children[i] != null && node.children[NFactorpos].children[i].getNodeLabel().equals("<N>")) {
                     for (Token t : node.children[NFactorpos].tokenData) {
@@ -194,12 +187,20 @@ class GeneratorActions {
                 }
             }
 
-            if (operator != null) {
-                if (operator.equals("MULT_TK")) {
-                    genOut.appendCommand("MULT " + temp1);
-                } else {
-                    genOut.appendCommand("DIV " + temp1);
-                }
+
+        }
+        String temp1 = generateTempVariable();
+        genOut.appendCommand("STORE " + temp1);
+
+        if (Mpos > -1)
+            treePreorderGeneratorTraversal(node.children[Mpos]);
+
+
+        if (operator != null) {
+            if (operator.equals("MULT_TK")) {
+                genOut.appendCommand("MULT " + temp1);
+            } else {
+                genOut.appendCommand("DIV " + temp1);
             }
         }
     }
