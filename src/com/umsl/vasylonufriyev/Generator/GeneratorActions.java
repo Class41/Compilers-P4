@@ -166,10 +166,24 @@ class GeneratorActions {
     }
 
     void outputA(ProgramNode node) {
+        int Apos = -1, Npos = -1;
+
         for (int i = 0; i < node.children.length; i++) { //Check children L -> R
-            if (node.children[i] != null) {
-                treePreorderGeneratorTraversal(node.children[i]);
+            if (node.children[i] != null && node.children[i].getNodeLabel().equals("<A>")) {
+                Apos = i;
+            } else if (node.children[i] != null && node.children[i].getNodeLabel().equals("<N>")) {
+                Npos = i;
             }
+        }
+
+        if (Apos > -1) {
+            treePreorderGeneratorTraversal(node.children[Apos]);
+            String temp1 = generateTempVariable();
+            genOut.appendCommand("STORE " + temp1);
+            treePreorderGeneratorTraversal(node.children[Npos]);
+            genOut.appendCommand("SUB " + temp1);
+        } else {
+            treePreorderGeneratorTraversal(node.children[Npos]);
         }
     }
 
