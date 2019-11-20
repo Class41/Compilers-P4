@@ -1,4 +1,10 @@
 PUSH
+LOAD 5
+STACKW 0
+PUSH
+LOAD 2
+STACKW 0
+PUSH
 LOAD 0
 STACKW 0
 STORE Tempvar0
@@ -21,7 +27,15 @@ STORE Tempvar8
 STACKR 0
 STORE Tempvar7
 WRITE Tempvar7
+STORE Tempvar10
+STACKR 1
+STORE Tempvar9
+WRITE Tempvar9
 POP
+STORE Tempvar12
+STACKR 1
+STORE Tempvar11
+WRITE Tempvar11
 STOP
 Tempvar0 0
 Tempvar1 0
@@ -32,3 +46,7 @@ Tempvar5 0
 Tempvar6 0
 Tempvar7 0
 Tempvar8 0
+Tempvar9 0
+Tempvar10 0
+Tempvar11 0
+Tempvar12 0
