@@ -1,37 +1,41 @@
 PUSH
-LOAD 1
+LOAD 5
 STACKW 0
 PUSH
 LOAD 2
 STACKW 0
 PUSH
-LOAD 3
+LOAD 0
 STACKW 0
-PUSH
-LOAD 4
-STACKW 0
-STACKR 0
-STORE Tempvar1
-LOAD 1000
-STORE Tempvar2
-DIV Tempvar1
-STORE Tempvar3
 STORE Tempvar0
-WRITE Tempvar0
-POP
-STACKR 0
-STORE Tempvar5
+LOAD 100
+MULT -1
+STORE Tempvar1
+STORE Tempvar2
+LOAD 10
+STORE Tempvar3
 STORE Tempvar4
-WRITE Tempvar4
-STACKR 1
-STORE Tempvar7
+LOAD 5
+STORE Tempvar5
 STORE Tempvar6
-WRITE Tempvar6
-STACKR 2
-STORE Tempvar9
+LOAD 5
+ADD Tempvar5
+MULT Tempvar3
+DIV Tempvar1
+STACKW 0
 STORE Tempvar8
-WRITE Tempvar8
+STACKR 0
+STORE Tempvar7
+WRITE Tempvar7
+STORE Tempvar10
+STACKR 1
+STORE Tempvar9
+WRITE Tempvar9
 POP
+STORE Tempvar12
+STACKR 1
+STORE Tempvar11
+WRITE Tempvar11
 STOP
 Tempvar0 0
 Tempvar1 0
@@ -43,3 +47,6 @@ Tempvar6 0
 Tempvar7 0
 Tempvar8 0
 Tempvar9 0
+Tempvar10 0
+Tempvar11 0
+Tempvar12 0

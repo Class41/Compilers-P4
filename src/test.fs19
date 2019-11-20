@@ -1,11 +1,7 @@
-var x1 : 5
-var x2 : 2
 start
-start
-var x1 : 0
-x1 << [[5+5] * 10] / -100;
-out x1;
-out x2;
-stop;
-out x1;
+var x : 1
+var y : 2
+cond (( x <> y ))
+out x;
 stop
+

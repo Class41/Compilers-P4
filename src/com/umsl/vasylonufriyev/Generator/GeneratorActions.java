@@ -22,8 +22,12 @@ class GeneratorActions {
         genOut.finalizeAndWrite();
     }
 
-    String generateTempVariable() {
+    private String generateTempVariable() {
         return TempVariableGenerator.generateTempVar();
+    }
+
+    private String generateUniqueAnchor() {
+        return  TempVariableGenerator.generateUniqueAnchor();
     }
 
     void outputPop() {
@@ -63,10 +67,8 @@ class GeneratorActions {
             }
         }
 
-        for (int i = 0; i < node.tokenData.length; i++)
-        {
-            if(node.tokenData[i] != null && node.tokenData[i].getTokenType().equals("IDENTIFIER_TK"))
-            {
+        for (int i = 0; i < node.tokenData.length; i++) {
+            if (node.tokenData[i] != null && node.tokenData[i].getTokenType().equals("IDENTIFIER_TK")) {
                 treePreorderGeneratorTraversal(node.children[Exprpos]);
                 genOut.appendCommand("STACKW " + varStack.find(node.tokenData[i]));
             }
@@ -82,10 +84,72 @@ class GeneratorActions {
     }
 
     void outputIf(ProgramNode node) {
+        int Expr1pos = -1, ROpos = -1, Expr2pos = -1, Statpos = -1;
+
         for (int i = 0; i < node.children.length; i++) { //Check children L -> R
-            if (node.children[i] != null) {
-                treePreorderGeneratorTraversal(node.children[i]);
+            if (node.children[i] != null && node.children[i].getNodeLabel().equals("<Expr>")) {
+                Expr1pos = i;
+                for (int j = i + 1; j < node.children.length; j++) { //Check children L -> R
+                    if (node.children[j] != null && node.children[j].getNodeLabel().equals("<RO>")) {
+                        ROpos = j;
+                        for (int k = j + 1; k < node.children.length; k++) { //Check children L -> R
+                            if (node.children[k] != null && node.children[k].getNodeLabel().equals("<Expr>")) {
+                                Expr2pos = k;
+                                for (int l = k + 1; l < node.children.length; l++) { //Check children L -> R
+                                    if (node.children[l] != null && node.children[l].getNodeLabel().equals("<Expr>")) {
+                                        Statpos = l;
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
             }
+        }
+
+        String temp1 = generateTempVariable();
+        String temp2 = generateTempVariable();
+
+        if (Expr1pos > -1)
+            treePreorderGeneratorTraversal(node.children[Expr1pos]);
+        genOut.appendCommand("STORE " + temp1);
+
+        if (Expr2pos > -1)
+            treePreorderGeneratorTraversal(node.children[Expr2pos]);
+        genOut.appendCommand("STORE " + temp2);
+
+        StringBuilder operator = new StringBuilder();
+
+        if (ROpos > -1) {
+            for (Token t : node.children[ROpos].tokenData) {
+                if (t != null) {
+                    operator.append(t.getTokenValue());
+                }
+            }
+
+            for (ProgramNode pn : node.children[ROpos].children) {
+                if (pn != null) {
+                    for (Token t : pn.tokenData) {
+                        if (t != null) {
+                            operator.append(t.getTokenValue());
+                        }
+                    }
+                }
+            }
+        }
+
+        if (operator.toString().equals("<>")) {
+            String anchor1 = generateUniqueAnchor();
+            genOut.appendCommand("LOAD " + temp1);
+            genOut.appendCommand("SUB " + temp2);
+            genOut.appendCommand("BRZERO " + anchor1);
+            if (Statpos > -1)
+                treePreorderGeneratorTraversal(node.children[Statpos]);
+            genOut.appendCommand(anchor1 + ": NOOP");
         }
     }
 
@@ -308,6 +372,7 @@ class GeneratorActions {
 
 class TempVariableGenerator {
     private static int currentIter = 0;
+    private static int currentAnchor = 0;
     private static List<String> tempVars = new ArrayList<String>();
 
     static String generateTempVar() {
@@ -316,10 +381,16 @@ class TempVariableGenerator {
         return currentTemp;
     }
 
+    static String generateUniqueAnchor() {
+        return "Anchor" + currentAnchor++;
+    }
+
     static String getFormattedTempVars() {
         StringBuilder total = new StringBuilder();
         for (String s : tempVars) total.append(s).append(" 0\n");
 
         return total.toString();
     }
+
+
 }
