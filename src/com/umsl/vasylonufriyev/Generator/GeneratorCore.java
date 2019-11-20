@@ -10,7 +10,7 @@ public class GeneratorCore {
         this.usingFile = usingFile;
     }
 
-    public void generateCodeForNode(ProgramNode node) { //0 = preorder, 1 = inorder, 2 = postorder
+    void generateCodeForNode(ProgramNode node) {
         switch (node.getNodeLabel()) {
             case "<Program>":
                 genActions.outputProgram(node);

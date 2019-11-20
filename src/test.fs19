@@ -1,12 +1,3 @@
-var x1 : 1
-var x2 : 2
 start
-var x3 : 3
-start
-var x3 : 1000
-out [x3 * 4250 - 4250] ;
-stop;
-out x3;
-out x2;
-out x1;
+out [1000 / 4] ;
 stop
