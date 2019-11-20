@@ -150,17 +150,65 @@ class GeneratorActions {
     }
 
     void outputNFactor(ProgramNode node) {
+        int Npos = -1;
+        String operator;
+
+
         for (int i = 0; i < node.children.length; i++) { //Check children L -> R
-            if (node.children[i] != null) {
-                treePreorderGeneratorTraversal(node.children[i]);
+            if (node.children[i] != null && node.children[i].getNodeLabel().equals("<N>")) {
+                Npos = i;
+
+                for (Token t : node.tokenData) {
+                    if(t.getTokenType().equals("MULT_TK") || t.getTokenType().equals("DIVIDE_TK"))
+                    {
+                        operator = t.getTokenType();
+                    }
+                }
             }
         }
+
+        if(Npos > -1)
+        {
+            treePreorderGeneratorTraversal(node.children[Npos]);
+        }
+
     }
 
     void outputN(ProgramNode node) {
+        int Mpos = -1, NFactorpos = -1;
+
         for (int i = 0; i < node.children.length; i++) { //Check children L -> R
-            if (node.children[i] != null) {
-                treePreorderGeneratorTraversal(node.children[i]);
+            if (node.children[i] != null && node.children[i].getNodeLabel().equals("<M>")) {
+                Mpos = i;
+            } else if (node.children[i] != null && node.children[i].getNodeLabel().equals("<NFactor>")) {
+                NFactorpos = i;
+            }
+        }
+
+        treePreorderGeneratorTraversal(node.children[Mpos]);
+        String temp1 = generateTempVariable();
+        genOut.appendCommand("STORE " + temp1);
+        treePreorderGeneratorTraversal(node.children[NFactorpos]);
+
+        String operator = null;
+        for (int i = 0; i < node.children[NFactorpos].children.length; i++) { //Check children L -> R
+            if (node.children[NFactorpos].children[i] != null && node.children[NFactorpos].children[i].getNodeLabel().equals("<N>")) {
+                for (Token t : node.tokenData) {
+                    if(t.getTokenType().equals("MULT_TK") || t.getTokenType().equals("DIVIDE_TK"))
+                    {
+                        operator = t.getTokenType();
+                    }
+                }
+            }
+        }
+
+        if(operator != null)
+        {
+            if(operator.equals("MULT_TK"))
+            {
+                genOut.appendCommand("MULT " + temp1);
+            } else {
+                genOut.appendCommand("DIV " + temp1);
             }
         }
     }
