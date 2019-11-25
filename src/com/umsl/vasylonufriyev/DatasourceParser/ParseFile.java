@@ -54,7 +54,8 @@ public class ParseFile {
     }
 
     public boolean isUsingFile() {
-        if(parser.isUsingFile() != null) return parser.isUsingFile();
-        else return false;
+        if (parser != null)
+            return parser.isUsingFile();
+        return false;
     }
 }

@@ -90,9 +90,9 @@ class ParseCore {
     }
 
     boolean isUsingFile() {
-        if(inType == null)
-                return false;
+        if (inType == null)
+            return false;
         else
-                return inType == ParseSourceType.FILEINPUT;
+            return inType == ParseSourceType.FILEINPUT;
     }
 }
